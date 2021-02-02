@@ -3,8 +3,10 @@ export interface projectFeedbacks {
     id: number;
     projectId: number;
     userId: number;
-    rating: number;
-    comments: string;
+    feedback: {
+      rating: number;
+      comments: string;
+    };
   };
 }
 
@@ -12,6 +14,8 @@ export interface projectFeedback {
   id: number;
   projectId: number;
   userId: number;
-  rating: number;
-  comments: string;
+  feedback: {
+    rating: number;
+    comments: string;
+  };
 }

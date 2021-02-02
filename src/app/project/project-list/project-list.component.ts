@@ -31,8 +31,6 @@ export class ProjectListComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.getAllProjectFeedback().subscribe(
       (feedbacks: any) => {
-        console.log('getAllProjectFeedback data', feedbacks);
-
         forkJoin([
           this.authService.getAllUsers(),
           this.projectService.getProjects(),

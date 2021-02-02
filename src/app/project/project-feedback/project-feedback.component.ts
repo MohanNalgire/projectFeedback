@@ -28,23 +28,41 @@ export class ProjectFeedbackComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.feedbackId = params['id'];
     });
+    // default feedback form
+    this.feedbackForm = this.formBuilder.group({
+      employeeName: ['', Validators.required],
+      employeeNumber: [null, Validators.required],
+      employeeProject: ['', Validators.required],
+      employeeComments: ['', Validators.required],
+    });
+  }
 
+  ngAfterViewInit() {
     this.projectService
       .getProjectFeedbackUserId(this.feedbackId)
       .subscribe((feedback: any) => {
         this.currentFeedback = feedback;
+        const user = JSON.parse(sessionStorage.getItem('loginUser'));
+        const userName = user ? user[0]?.name : '';
+        const userId = this.currentFeedback
+          ? this.currentFeedback.userId
+          : null;
+        const project = this.currentFeedback
+          ? this.currentFeedback.projectId
+          : '';
+        this.selectedValue = this.currentFeedback
+          ? this.currentFeedback?.feedback.rating
+          : null;
+        const comments = this.currentFeedback
+          ? this.currentFeedback?.feedback.comments
+          : '';
+        this.feedbackForm = this.formBuilder.group({
+          employeeName: [userName, Validators.required],
+          employeeNumber: [userId, Validators.required],
+          employeeProject: [project, Validators.required],
+          employeeComments: [comments, Validators.required],
+        });
       });
-
-    const user = JSON.parse(sessionStorage.getItem('loginUser'));
-    const userName = user[0].name;
-    const userId = this.currentFeedback.userId ?? user[0].id;
-    const project = this.currentFeedback.projectId ?? null;
-    this.feedbackForm = this.formBuilder.group({
-      employeeName: [userName, Validators.required],
-      employeeNumber: [userId, Validators.required],
-      employeeProject: [project, Validators.required],
-      employeeComments: ['', Validators.required],
-    });
 
     this.getProjectList();
   }
