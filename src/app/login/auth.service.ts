@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User, Users } from './user.interface';
 
@@ -10,7 +11,7 @@ export class AuthService {
   url = 'http://localhost:3000/users';
   loggedIn: boolean;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public getAllUsers(): Observable<Array<User>> {
     return this.http.get<Array<User>>(this.url, { observe: 'body' });
@@ -36,6 +37,7 @@ export class AuthService {
               '4234324234223423423423423423424'
             );
             this.loggedIn = true;
+            this.router.navigateByUrl('/project');
           } else {
             this.loggedIn = false;
           }

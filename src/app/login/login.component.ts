@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { AuthService } from './auth.service';
 export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private router: Router,
     private formBuilder: FormBuilder
   ) {}
 
@@ -32,9 +30,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login(this.loginForm.value);
-    if (this.authService.isLoggedIn() === true) {
-      this.router.navigateByUrl('/project');
-    }
   }
 
   get formControls() {
