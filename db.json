@@ -11,7 +11,7 @@
     {
       "id": 2,
       "name": "John D",
-      "username": "John",
+      "username": "john",
       "password": "password1",
       "email": "johnd@gmail.com",
       "type": "manager"

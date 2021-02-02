@@ -17,6 +17,7 @@ export class AuthService {
   }
 
   public login(userInfo: User) {
+    this.loggedIn = false;
     console.log('test on userInfo', userInfo);
     let paramters = new HttpParams();
     paramters = paramters.set('username', userInfo.username);
@@ -26,14 +27,18 @@ export class AuthService {
         params: paramters,
       })
       .subscribe(
-        (user) => {
+        (user: any) => {
           console.log('Auth service data', user);
-          sessionStorage.setItem('loginUser', JSON.stringify(user));
-          localStorage.setItem(
-            'ACCESS_TOKEN',
-            '4234324234223423423423423423424'
-          );
-          this.loggedIn = user ? true : false;
+          if (user?.length > 0) {
+            sessionStorage.setItem('loginUser', JSON.stringify(user));
+            localStorage.setItem(
+              'ACCESS_TOKEN',
+              '4234324234223423423423423423424'
+            );
+            this.loggedIn = true;
+          } else {
+            this.loggedIn = false;
+          }
         },
         (error) => {
           console.error('Error in auth service:', error);
@@ -46,7 +51,7 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return this.loggedIn && localStorage.getItem('ACCESS_TOKEN') !== null;
+    return this.loggedIn;
   }
 
   public logout() {

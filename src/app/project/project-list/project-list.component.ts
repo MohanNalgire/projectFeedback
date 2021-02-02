@@ -37,9 +37,11 @@ export class ProjectListComponent implements OnInit {
         ]).subscribe((data) => {
           this.allUsers = data[0];
           this.allProjects = data[1];
-          // console.log('forkjoin data', data, this.allUsers, this.allProjects);
 
           feedbacks.map((feedback) => {
+            // show current user type wise records
+            const user = JSON.parse(sessionStorage.getItem('loginUser'));
+            const usertype = user ? user[0]?.type : '';
             const userName = this.allUsers.filter(
               (e) => e.id === feedback.userId
             )[0]?.name;
@@ -53,6 +55,9 @@ export class ProjectListComponent implements OnInit {
               project: projectName,
               feedback: feedback.feedback,
             });
+            if (usertype === 'manager') {
+            } else {
+            }
           });
 
           this.projectFeedbackCols = this.utilService.nestedObjectKeys(
