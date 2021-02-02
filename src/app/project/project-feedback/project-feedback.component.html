@@ -1,0 +1,41 @@
+<div class="feedback-container">
+    <form [formGroup]="feedbackForm" class="feedback-container" (ngSubmit)="feedback()">
+
+        <div class="form-group">
+            <label>Employee Name</label>
+            <input type="text" class="form-control" placeholder=" Employee Name" formControlName="employeeName"
+                disabled>
+        </div>
+        <div class="form-group">
+            <label>Employee Id</label>
+            <input class="form-control" type="number" placeholder="Employee Id" formControlName="employeeNumber">
+        </div>
+
+        <div class="form-group">
+            <label>Project</label>
+            <select class="form-control" formControlName="employeeProject">
+                <option value="">Select Project</option>
+                <option *ngFor="let project of projectList" [value]="project.id">{{project.name}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Rating</label>
+            <div class="ratingdiv">
+                <ul class="list-inline rating-list" *ngFor="let star of stars" style="display: inline-block">
+                    <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}">
+                        <i class="fa fa-star fa-lg"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Comments</label>
+            <textarea class="form-control" formControlName="employeeComments"></textarea>
+        </div>
+
+        <input class="btn btn-secondary mx-2" type="button" value="Cancel">
+        <input class="btn btn-success mx-2" type="submit" value="submit">
+    </form>
+</div>
